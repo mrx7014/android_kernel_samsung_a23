@@ -62,35 +62,30 @@ static ssize_t store_hdm_policy(struct device *dev,
 {
 	unsigned long mode = HDM_CMD_MAX;
 	int c, p;
-
 	if (count == 0) {
 		hdm_err("%s count = 0\n", __func__);
 		goto error;
 	}
-
 	if (kstrtoul(buf, 0, &mode)) {
 		goto error;
 	};
-
 	if (mode > HDM_CMD_MAX) {
 		hdm_err("%s command size max fail. %d\n", __func__, mode);
 		goto error;
 	}
 	hdm_info("%s: command id: 0x%x\n", __func__, (int)mode);
-
 	c = (int)(mode & HDM_C_BITMASK);
 	p = (int)(mode & HDM_P_BITMASK);
-
 	hdm_info("%s m:0x%x c:0x%x p:0x%x\n", __func__, (int)mode, c, p);
 	switch (c) {
 #if defined(CONFIG_ARCH_QCOM)
 	case HDM_HYP_CALL:
 		hdm_info("%s HDM_HYP_CALL\n", __func__);
-		uh_call(UH_APP_HDM, 9, 0, p, 0, 0);
+		// uh_call removida
 		break;
 	case HDM_HYP_CALLP:
 		hdm_info("%s HDM_HYP_CALLP\n", __func__);
-		uh_call(UH_APP_HDM, 2, 0, p, 0, 0);
+		// uh_call removida
 		break;
 #endif
 	default:
